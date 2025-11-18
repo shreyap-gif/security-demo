@@ -1,19 +1,62 @@
-<plugin>
-  <groupId>org.owasp</groupId>
-  <artifactId>dependency-check-maven</artifactId>
-  <version>8.3.2</version>
-  <executions>
-    <execution>
-      <goals>
-        <goal>check</goal>
-      </goals>
-    </execution>
-  </executions>
-  <configuration>
-    <formats>
-      <format>HTML</format>
-      <format>JSON</format>
-    </formats>
-    <outputDirectory>${project.build.directory}/dependency-check-report</outputDirectory>
-  </configuration>
-</plugin>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.demo</groupId>
+  <artifactId>security-demo</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>security-demo</name>
+  <description>Simple Java app with OWASP Dependency-Check</description>
+
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <!-- simple dependency so dependency-check has something to scan -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.12.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Compiler plugin (standard) -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+      </plugin>
+
+      <!-- OWASP Dependency-Check plugin -->
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>8.3.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <formats>
+            <format>HTML</format>
+            <format>JSON</format>
+          </formats>
+          <outputDirectory>${project.build.directory}/dependency-check-report</outputDirectory>
+          <!-- optional: do not fail build on initial runs, instructor may want this removed -->
+          <!-- <junitFailOnCVSS>7.0</junitFailOnCVSS> -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
